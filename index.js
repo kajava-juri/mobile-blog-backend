@@ -15,12 +15,16 @@ let posts = [
     {
         id:1,
         title: "Veniam Lorem consequat ex consequat non fugiat excepteur deserunt anim sunt.",
-        body: "Ipsum est ipsum elit duis minim cillum dolor in ad dolor labore. Amet sunt officia anim dolor minim labore nostrud officia nisi eu proident et. Officia ipsum incididunt cupidatat consequat deserunt labore nostrud exercitation Lorem eu aliquip culpa ut enim. Minim est officia ipsum elit sit irure voluptate duis esse occaecat excepteur sint est sit. Deserunt tempor magna officia ex et laborum anim incididunt labore do excepteur."
+        body: "Ipsum est ipsum elit duis minim cillum dolor in ad dolor labore. Amet sunt officia anim dolor minim labore nostrud officia nisi eu proident et. Officia ipsum incididunt cupidatat consequat deserunt labore nostrud exercitation Lorem eu aliquip culpa ut enim. Minim est officia ipsum elit sit irure voluptate duis esse occaecat excepteur sint est sit. Deserunt tempor magna officia ex et laborum anim incididunt labore do excepteur.",
+        image: "https://github.com/mxrguspxrt/mobile/raw/main/cat1.jpeg",
+        description: "desc"
     },
     {
         id: 2,
         title: "test",
-        body: "body2"
+        body: "body2",
+        image: "https://github.com/mxrguspxrt/mobile/raw/main/cat1.jpeg",
+        description: "desc"
     }
 ];
 
@@ -42,6 +46,13 @@ let comments = [
     }
 ]
 
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 //GET
 app.get("/api/posts/", (req, res) => {
     return res.send(posts);
@@ -55,8 +66,8 @@ app.get("/api/posts/:id/comments", (req, res) => {
 
 //CREATE
 app.post("/api/posts/", (req, res) => {
-    let {title, body} = req.body;
-    let newPost = {id: postId, title: title, body: body};
+    let {title, body, image, description} = req.body;
+    let newPost = {id: postId, title: title, body: body, image: image, description: description};
     posts.push(newPost);
     postId++;
     return res.send(newPost);
